@@ -10,6 +10,24 @@ Leanback launcher integration.
 
 ---
 
+## Download
+
+Grab the signed APK from the **[latest release](https://github.com/Mehran/Mehran-Melodify/releases/latest)**:
+
+| Release asset | Size |
+| --- | --- |
+| [`MelodifyTV-1.0.0-armeabi-v7a.apk`](https://github.com/Mehran/Mehran-Melodify/releases/download/v1.0.0/MelodifyTV-1.0.0-armeabi-v7a.apk) | 2.4 MB |
+| [`MelodifyTV-1.0.0-armeabi-v7a.apk.sha256`](https://github.com/Mehran/Mehran-Melodify/releases/download/v1.0.0/MelodifyTV-1.0.0-armeabi-v7a.apk.sha256) | checksum |
+
+```bash
+adb connect <box-ip>:5555
+adb install -r MelodifyTV-1.0.0-armeabi-v7a.apk
+```
+
+The same files are committed under `dist/` if you prefer to clone the repo.
+
+---
+
 ## Deliverables
 
 | File | Purpose |
