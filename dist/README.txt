@@ -2,7 +2,7 @@ Mehran Melodify 1.1.0 — Android TV / NetBox wrapper
 ===================================================
 
 APK:      MehranMelodify-1.1.0-armeabi-v7a.apk (2.5 MB, signed, minSdk 21, targetSdk 35)
-SHA-256:  e5fc0e39063edc58d4f75ae9c2fd77576c331c3836346f9a242fc683563cdd2c
+SHA-256:  e3edc9333b4f4bdb70a23de3de19f86213f238aebde838e14b38d5e327cffe89
 
 Install over ADB:
     adb connect <box-ip>:5555

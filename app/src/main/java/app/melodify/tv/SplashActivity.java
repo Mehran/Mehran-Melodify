@@ -111,6 +111,9 @@ public class SplashActivity extends AppCompatActivity {
         // BACK leaves the app, anything else (OK / arrows) jumps straight in.
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             handler.removeCallbacks(launchRunnable);
+            // The process outlives this exit, so clear the flag: opening the app
+            // again must still show the intro.
+            introShown = false;
             finish();
             return true;
         }

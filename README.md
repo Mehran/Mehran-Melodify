@@ -43,7 +43,7 @@ The same files are committed under `dist/` if you prefer to clone the repo.
 APK SHA-256:
 
 ```
-e5fc0e39063edc58d4f75ae9c2fd77576c331c3836346f9a242fc683563cdd2c
+e3edc9333b4f4bdb70a23de3de19f86213f238aebde838e14b38d5e327cffe89
 ```
 
 Package: `app.melodify.tv` · Version: `1.1.0` (versionCode 2)
@@ -139,7 +139,8 @@ update **Android System WebView** from the Play Store or install a current WebVi
 - Any remote key skips the intro immediately; **BACK** leaves the app.
 - The intro plays once per app process. Returning from **HOME** goes straight to the
   player (so music is never covered by a splash), while a cold start, reboot or
-  "force stop" shows it again.
+  "force stop" shows it again. Exiting the app with BACK during the intro also
+  resets this, so the next launch still plays it.
 - One mark drives every asset: a green→teal gradient tile with four white equalizer
   bars, used for the adaptive icon, the legacy launcher PNGs at every density, the
   round icon, the TV banner and the intro logo.
