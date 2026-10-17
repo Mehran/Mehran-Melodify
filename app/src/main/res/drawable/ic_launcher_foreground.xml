@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive-icon foreground: the equalizer bars of the Mehran Melodify mark.
+     Kept inside the 66dp safe zone so launcher masks never clip the bars. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
     <path
-        android:fillColor="#FF0A0A0A"
-        android:pathData="M43,35 L77,54 L43,73 Z" />
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M32,63 a4,4 0 0 1 8,0 L40,75 a4,4 0 0 1 -8,0 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M44,49 a4,4 0 0 1 8,0 L52,75 a4,4 0 0 1 -8,0 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M56,35 a4,4 0 0 1 8,0 L64,75 a4,4 0 0 1 -8,0 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M68,55 a4,4 0 0 1 8,0 L76,75 a4,4 0 0 1 -8,0 Z" />
 </vector>

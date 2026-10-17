@@ -41,10 +41,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
-            android:letterSpacing="0.22"
+            android:letterSpacing="0.10"
             android:text="@string/app_name"
             android:textColor="@color/accent"
-            android:textSize="34sp" />
+            android:textSize="28sp" />
 
         <ProgressBar
             android:layout_width="38dp"

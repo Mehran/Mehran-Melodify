@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Melodify TV</string>
+    <string name="app_name">Mehran Melodify</string>
+    <string name="splash_tagline">Music on the big screen</string>
+    <string name="splash_loading">Tuning in…</string>
     <string name="loading">Loading Melodify…</string>
     <string name="loading_hint">Use the remote to navigate</string>
     <string name="error_title">Can\'t reach Melodify</string>

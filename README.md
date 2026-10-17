@@ -1,10 +1,12 @@
-# Melodify TV
+# Mehran Melodify
 
 A native Android TV / NetBox wrapper for **https://desktop.melodify.app/login/get-number**.
 
 The app is a full-screen WebView shell with the TV-specific workarounds needed for
 D-pad navigation, soft-keyboard entry, session persistence, audio autoplay and
-Leanback launcher integration.
+Leanback launcher integration, wrapped in a music-themed intro screen.
+
+![Music-themed intro screen with the Mehran Melodify logo and an animated equalizer](docs/screenshot-intro.png)
 
 ![Login screen with the TV keyboard open](docs/screenshot-login.png)
 
@@ -16,12 +18,12 @@ Grab the signed APK from the **[latest release](https://github.com/Mehran/Mehran
 
 | Release asset | Size |
 | --- | --- |
-| [`MelodifyTV-1.0.0-armeabi-v7a.apk`](https://github.com/Mehran/Mehran-Melodify/releases/download/v1.0.0/MelodifyTV-1.0.0-armeabi-v7a.apk) | 2.4 MB |
-| [`MelodifyTV-1.0.0-armeabi-v7a.apk.sha256`](https://github.com/Mehran/Mehran-Melodify/releases/download/v1.0.0/MelodifyTV-1.0.0-armeabi-v7a.apk.sha256) | checksum |
+| [`MehranMelodify-1.1.0-armeabi-v7a.apk`](https://github.com/Mehran/Mehran-Melodify/releases/download/v1.1.0/MehranMelodify-1.1.0-armeabi-v7a.apk) | 2.5 MB |
+| [`MehranMelodify-1.1.0-armeabi-v7a.apk.sha256`](https://github.com/Mehran/Mehran-Melodify/releases/download/v1.1.0/MehranMelodify-1.1.0-armeabi-v7a.apk.sha256) | checksum |
 
 ```bash
 adb connect <box-ip>:5555
-adb install -r MelodifyTV-1.0.0-armeabi-v7a.apk
+adb install -r MehranMelodify-1.1.0-armeabi-v7a.apk
 ```
 
 The same files are committed under `dist/` if you prefer to clone the repo.
@@ -32,30 +34,32 @@ The same files are committed under `dist/` if you prefer to clone the repo.
 
 | File | Purpose |
 | --- | --- |
-| `dist/MelodifyTV-1.0.0-armeabi-v7a.apk` | Signed release APK |
-| `dist/MelodifyTV-1.0.0-armeabi-v7a.apk.sha256` | SHA-256 checksum |
+| `dist/MehranMelodify-1.1.0-armeabi-v7a.apk` | Signed release APK (current) |
+| `dist/MehranMelodify-1.1.0-armeabi-v7a.apk.sha256` | SHA-256 checksum |
+| `dist/MelodifyTV-1.0.0-armeabi-v7a.apk` | Previous build, kept for rollback |
 | `dist/MelodifyTV-AndroidTV-source.zip` | Complete Android Studio project (signing material excluded) |
 | `README.md` | This document |
 
 APK SHA-256:
 
 ```
-f97f58725cb764f907e865be1e282ea977852db9d72b3bc50be9aa8441a6d1f1
+e5fc0e39063edc58d4f75ae9c2fd77576c331c3836346f9a242fc683563cdd2c
 ```
 
-Package: `app.melodify.tv` · Version: `1.0.0` (versionCode 1)
+Package: `app.melodify.tv` · Version: `1.1.0` (versionCode 2)
 Min SDK: 21 · Target/compile SDK: 35 · Landscape · Signed with APK signature schemes v1 + v2.
 
 ---
 
 ## Install on a NetBox / Android TV device
 
-1. Copy `MelodifyTV-1.0.0-armeabi-v7a.apk` to the device or use ADB:
+1. Copy `MehranMelodify-1.1.0-armeabi-v7a.apk` to the device or use ADB:
    ```bash
    adb connect <box-ip>:5555
-   adb install -r MelodifyTV-1.0.0-armeabi-v7a.apk
+   adb install -r MehranMelodify-1.1.0-armeabi-v7a.apk
    ```
-2. Launch **Melodify TV** from the Android TV launcher's Apps row.
+2. Launch **Mehran Melodify** from the Android TV launcher's Apps row. The intro
+   plays, then the Melodify login screen appears.
 
 The APK is ABI-neutral: a WebView app contains no native `.so` libraries, so the
 `armeabi-v7a` filter does not exclude arm64 or x86 test devices either. It installs
@@ -127,6 +131,19 @@ update **Android System WebView** from the Play Store or install a current WebVi
 - Full-screen black theme, custom error screen with a D-pad-focusable **Retry**
   button, and a branded loading overlay.
 
+### 5. Music-themed intro and branding
+- `SplashActivity` is the `LAUNCHER` / `LEANBACK_LAUNCHER` entry point. It shows the
+  logo mark, the **Mehran Melodify** wordmark, the tagline *Music on the big screen*
+  and a 7-bar equalizer animated by `EqualizerView`, then fades into the WebView
+  after 2.4 s.
+- Any remote key skips the intro immediately; **BACK** leaves the app.
+- The intro plays once per app process. Returning from **HOME** goes straight to the
+  player (so music is never covered by a splash), while a cold start, reboot or
+  "force stop" shows it again.
+- One mark drives every asset: a green→teal gradient tile with four white equalizer
+  bars, used for the adaptive icon, the legacy launcher PNGs at every density, the
+  round icon, the TV banner and the intro logo.
+
 ---
 
 ## Project structure
@@ -136,13 +153,17 @@ app/src/main/
 ├── AndroidManifest.xml
 ├── assets/tv-enhance.js          # D-pad spatial nav, focus ring, IME hints
 ├── java/app/melodify/tv/
+│   ├── SplashActivity.java       # music-themed intro, then launches the WebView
+│   ├── EqualizerView.java        # animated equalizer bars for the intro
 │   ├── MainActivity.java         # WebView setup, cookies, IME, back, errors
 │   └── WebAppBridge.java         # tiny JS bridge (keyboard + ready signal)
 └── res/
     ├── layout/activity_main.xml
+    ├── layout/activity_splash.xml
+    ├── drawable/logo_mark.png    # intro logo (also drawable-* densities)
     ├── drawable/tv_banner.png    # TV launcher banner
     ├── mipmap-*/                 # launcher icons
-    └── values/                  # theme, colors, strings
+    └── values/                   # theme, colors, strings
 ```
 
 ---
@@ -211,7 +232,15 @@ Tested on an **Android 12 TV emulator (1080p, 320 dpi, WebView 91.0.4472.114)**:
 - APK installs, launches, and appears as a **leanback-launchable** app with a banner
   in the TV launcher.
 - `aapt dump badging` shows `LAUNCHER` + `LEANBACK_LAUNCHER`, touchscreen not
-  required, and the correct SDK levels.
+  required, and the correct SDK levels, plus `application-label:'Mehran Melodify'`
+  and `launchable-activity: app.melodify.tv.SplashActivity`.
+- Branding: the TV launcher's Apps row lists **Mehran Melodify** with the green
+  equalizer icon (verified via launcher `content-desc` and a screenshot of the app
+  drawer); the banner OCRs as "Mehran / Melodify" at 320×180 and 640×360.
+- Intro: on a cold start the splash shows the wordmark and animates the equalizer
+  (OCR reads the title/tagline, 7 green bars measured on-screen), then hands over to
+  the WebView. Pressing OK during the intro jumps in immediately. Returning from HOME
+  skips the intro and resumes the same `MainActivity`/WebView instance.
 - D-pad: Down from the idle login screen focuses the phone field; Up/Down moves
   between the field and the Confirm button; a 3×3 grid test moved Right → Down →
   Left exactly as expected with a visible green focus ring.
@@ -228,6 +257,9 @@ Tested on an **Android 12 TV emulator (1080p, 320 dpi, WebView 91.0.4472.114)**:
   launcher.
 - `./gradlew lintRelease` passes.
 - `apksigner` verifies v1 + v2 signatures; SHA-256 recorded above.
+- v1.1.0 keeps the `app.melodify.tv` package id and signing key of v1.0.0, so it
+  installs with `adb install -r` over the previous build instead of requiring an
+  uninstall (verified on the emulator).
 
 ### Not verified / caveats
 
