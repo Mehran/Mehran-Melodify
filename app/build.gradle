@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.application'
+}
+
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    namespace 'app.melodify.tv'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "app.melodify.tv"
+        minSdk 21
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+
+        // The deliverable targets classic NetBox / armv7 TV boxes.
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+
+        resConfigs "en"
+    }
+
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    // Aligns the Kotlin stdlib modules pulled in transitively by AppCompat
+    // and coroutines; without this, old kotlin-stdlib-jdk7/8 artifacts
+    // duplicate classes now bundled in the modern stdlib.
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.22')
+
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+}

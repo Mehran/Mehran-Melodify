@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="background">#FF0A0A0A</color>
+    <color name="surface">#FF161616</color>
+    <color name="surface_stroke">#FF2A2A2A</color>
+    <color name="accent">#FF1ED760</color>
+    <color name="accent_pressed">#FF17B84F</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#FFB3B3B3</color>
+    <color name="icon_background">#FF1ED760</color>
+</resources>
